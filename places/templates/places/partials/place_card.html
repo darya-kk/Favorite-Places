@@ -1,0 +1,50 @@
+{% load static %}
+
+<div class="place-card">
+
+    <img src="{% static 'images/default_place.jpg' %}" alt="{{ place.name }}" class="place-img">
+
+    <div class="place-info">
+
+        <h3>
+            {% if show_link %}
+                <a href="{% url 'places:place_detail' forloop.counter0 %}">{{ place.name }}</a>
+            {% else %}
+                {{ place.name }}
+            {% endif %}
+        </h3>
+
+        <p class="short-desc">
+            {% if place.description %}
+                {{ place.description|truncatewords:12 }}
+            {% else %}
+                Опис відсутній
+            {% endif %}
+        </p>
+
+        <p><strong>Тип:</strong> {{ place.place_type }}</p>
+
+        <p>
+            <strong>Локація:</strong>
+            {% if place.location %}
+                {{ place.location }}
+            {% else %}
+                Secret place
+            {% endif %}
+        </p>
+
+        <p class="rating">
+            Рейтинг:
+            {% for i in "12345" %}
+                {% if forloop.counter <= place.rating %}
+                    +
+                {% else %}
+                    -
+                {% endif %}
+            {% endfor %}
+            ({{ place.rating }}/5)
+        </p>
+
+        <p class="date">Додано: {{ place.created_at }}</p>
+    </div>
+</div>>

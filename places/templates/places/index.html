@@ -1,0 +1,30 @@
+{% extends 'places/base.html' %}
+{% load static %}
+
+{% block title %}Головна · прикольні місця{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Мої улюблені місця</h1>
+    <p>Місця, куди я люблю ходити повечеряти, погуляти чи просто розважитись.</p>
+
+    <form method="post" class="random-form">
+        {% csrf_token %}
+        <button type="submit" name="random" class="btn btn-primary">
+            Куди піти сьогодні?
+        </button>
+    </form>
+</section>
+
+{% if random_place %}
+<section class="random-result">
+    <h2>Сьогодні рекомендую:</h2>
+    {% include 'places/partials/place_card.html' with place=random_place show_link=False %}
+</section>
+{% endif %}
+
+<section class="quick-links">
+    <a href="{% url 'places:places_list' %}" class="btn">Переглянути всі місця</a>
+    <a href="{% url 'places:add_place' %}" class="btn btn-outline">Додати нове місце</a>
+</section>
+{% endblock %}
